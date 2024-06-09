@@ -11,7 +11,7 @@
 Para rodar o sistema de Gestão de Frota de Veículos em PHP utilizando o XAMPP, siga os passos abaixo:
 
 ### 1. Instalação do XAMPP
-1. Faça o download do XAMPP a partir do site oficial [Apache Friends](https://www.apachefriends.org/index.html).
+1. Faça o download do XAMPP para o PHP 7.4 a partir do site oficial [Apache Friends](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/7.4.33/).
 2. Execute o instalador e siga as instruções para concluir a instalação.
 
 ### 2. Configuração do Ambiente
@@ -28,11 +28,12 @@ Para rodar o sistema de Gestão de Frota de Veículos em PHP utilizando o XAMPP,
    - Selecione o arquivo SQL fornecido e clique em "Go" para importar.
 
 ### 4. Configuração do Projeto
-1. Coloque os arquivos do projeto na pasta `htdocs` do XAMPP:
+1. Clone o repositório deste projeto na pasta `htdocs` do XAMPP:
    - Por padrão, essa pasta está localizada em `C:\xampp\htdocs`.
 
 ### 5. Executar o Sistema
-1. Abra o navegador e acesse o sistema utilizando o endereço: http://localhost/trabIntegrador/gestaoDeFrota
+1. Abra o navegador e acesse o sistema utilizando o endereço: `http://localhost/trabalhointegrador/gestaoDeFrota`
 2. Você deverá ver a tela de login ou a página inicial do sistema, indicando que ele está funcionando corretamente.
+3. O sistema pode ser acessado através do login `admin` e senha `admin`.
 
 Agora você está pronto para utilizar o sistema de Gestão de Frota de Veículos. Em caso de dúvidas ou problemas, consulte a documentação ou entre em contato com um dos membros do grupo.
