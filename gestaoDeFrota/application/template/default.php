@@ -3,10 +3,7 @@
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Sistema de gestão de veículos</title>
-
-		
-        <!--  -->
-
+		<link rel="icon" type="image/png" href="application/images/icon.png">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="viewport" content="width=device-width, user-scalable=no">
 		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
