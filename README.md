@@ -34,5 +34,6 @@ Para rodar o sistema de Gestão de Frota de Veículos em PHP utilizando o XAMPP,
 ### 5. Executar o Sistema
 1. Abra o navegador e acesse o sistema utilizando o endereço: `http://localhost/trabalhointegrador/gestaoDeFrota`
 2. Você deverá ver a tela de login ou a página inicial do sistema, indicando que ele está funcionando corretamente.
+3. O sistema pode ser acessado através do login `admin` e senha `admin`.
 
 Agora você está pronto para utilizar o sistema de Gestão de Frota de Veículos. Em caso de dúvidas ou problemas, consulte a documentação ou entre em contato com um dos membros do grupo.
