@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09-Jun-2024 às 20:42
+-- Tempo de geração: 09-Jun-2024 às 21:26
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 7.4.33
 
@@ -43,8 +43,7 @@ CREATE TABLE `agenda` (
 --
 
 INSERT INTO `agenda` (`age_cod`, `usu_cod`, `age_titulo`, `age_descricao`, `age_tipo`, `vei_cod`, `age_hora_ini`, `age_hora_fim`) VALUES
-(1, 7, 'TESTANDO', 'JSKJFKLSADJFKDSAJFDAS\r\n\r\nFSD\r\nFDS\r\nFDSFDSFDSFDSFDS', 1, 1, '2024/06/08 20:03:00', '2024/06/09 20:03:00'),
-(2, 7, 'DSADSA', 'DSADSADSADSADA', 1, 1, '2024/06/07 19:06:00', '2024/06/18 17:08:00');
+(2, 7, 'TESTE', 'teste', 1, 1, '2024/06/07 19:06:00', '2024/06/18 17:08:00');
 
 -- --------------------------------------------------------
 
@@ -119,7 +118,7 @@ CREATE TABLE `funcionario` (
 --
 
 INSERT INTO `funcionario` (`fun_cod`, `fun_nome`, `fun_cargo`, `set_cod`, `fun_tel`, `fun_mail`, `usu_cod`) VALUES
-(1, 'HENRY', NULL, 1, NULL, 'henry@gmail.com', 7);
+(1, 'funcionario', NULL, 1, NULL, 'funcionario@gmail.com', 7);
 
 -- --------------------------------------------------------
 
@@ -141,7 +140,7 @@ CREATE TABLE `setor` (
 --
 
 INSERT INTO `setor` (`set_cod`, `set_nome`, `set_descricao`, `set_responsavel`, `fun_cod`, `set_situacao`) VALUES
-(1, 'informatica', 'informatica da informação', 8, 1, 1);
+(1, 'Informática', 'Informática', 8, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -195,8 +194,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`usu_cod`, `usu_nome`, `usu_login`, `usu_senha`, `usu_email`, `cli_cod`, `upe_cod`, `usu_situacao`, `set_cod`, `fun_cod`) VALUES
-(7, 'PAULISTINHA', 'paulistinha', 'dc299f64ae4cac775203238689313938', 'fdasfadsfdsa@gmail.com', 0, 1, 1, 1, 0),
-(8, 'HENRY', 'henry', '027e4180beedb29744413a7ea6b84a42', 'henry@gmail.com', 0, 2, 1, 1, 1);
+(7, 'ADMIN', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@gmail.com', 0, 1, 1, 1, 0),
+(8, 'FUNCIONARIO', 'funcionario', 'cc7a84634199040d54376793842fe035', 'funcionario@gmail.com', 0, 2, 1, 1, 1);
 
 -- --------------------------------------------------------
 
