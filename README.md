@@ -32,7 +32,7 @@ Para rodar o sistema de Gestão de Frota de Veículos em PHP utilizando o XAMPP,
    - Por padrão, essa pasta está localizada em `C:\xampp\htdocs`.
 
 ### 5. Executar o Sistema
-1. Abra o navegador e acesse o sistema utilizando o endereço: http://localhost/trabIntegrador/gestaoDeFrota
+1. Abra o navegador e acesse o sistema utilizando o endereço: http://localhost/trabalhointegrador/gestaoDeFrota
 2. Você deverá ver a tela de login ou a página inicial do sistema, indicando que ele está funcionando corretamente.
 
 Agora você está pronto para utilizar o sistema de Gestão de Frota de Veículos. Em caso de dúvidas ou problemas, consulte a documentação ou entre em contato com um dos membros do grupo.
