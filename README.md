@@ -28,7 +28,7 @@ Para rodar o sistema de Gestão de Frota de Veículos em PHP utilizando o XAMPP,
    - Selecione o arquivo SQL fornecido e clique em "Go" para importar.
 
 ### 4. Configuração do Projeto
-1. Coloque os arquivos do projeto na pasta `htdocs` do XAMPP:
+1. Clone o repositório deste projeto na pasta `htdocs` do XAMPP:
    - Por padrão, essa pasta está localizada em `C:\xampp\htdocs`.
 
 ### 5. Executar o Sistema
