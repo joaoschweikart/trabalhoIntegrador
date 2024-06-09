@@ -39,4 +39,4 @@ Para rodar o sistema de Gestão de Frota de Veículos em PHP utilizando o XAMPP,
    ![image](https://github.com/joaoschweikart/trabalhoIntegrador/assets/100777351/c2681217-53ec-4a94-8a9f-70ef64686d44)
 
 
-Agora você está pronto para utilizar o sistema de Gestão de Frota de Veículos. Em caso de dúvidas ou problemas, consulte a documentação ou entre em contato com um dos membros do grupo.
+Agora você está pronto para utilizar o sistema de Gestão de Frota de Veículos. Em caso de dúvidas ou problemas, entre em contato com um dos membros do grupo.
