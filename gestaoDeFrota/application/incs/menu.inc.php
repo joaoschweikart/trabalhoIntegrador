@@ -156,7 +156,7 @@
             			echo '
                         <a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i><span class="nav-label">Relatórios</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li '.$item_sel[0].' ><a href="?module=relatorio&acao=lista_solicitacao"><i class="fa fa-calendar"></i><span class="nav-label">Agendamentos</a></li>
+                            <li '.$item_sel[0].' ><a href="?module=relatorio&acao=lista_agendamento"><i class="fa fa-calendar"></i><span class="nav-label">Agendamentos</a></li>
                         </ul>';
                     break;
             	}

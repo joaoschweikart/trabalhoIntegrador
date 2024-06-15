@@ -24,14 +24,6 @@ if ($_POST['usu_cod'] != '') {
     }
 }
 
-if ($_POST['cli_cod'] != '') {
-    if ($where != '') {
-        $where .= " AND c.cli_cod = " . $_POST['cli_cod'];
-    } else {
-        $where = "WHERE c.cli_cod = " . $_POST['cli_cod'];
-    }
-}
-
 if ($_POST['set_cod'] != '') {
     if ($where != '') {
         $where .= " AND a.set_cod = " . $_POST['set_cod'];
@@ -40,13 +32,6 @@ if ($_POST['set_cod'] != '') {
     }
 }
 
-if ($_POST['sol_status'] != '') {
-    if ($where != '') {
-        $where .= " AND a.sol_status = " . $_POST['sol_status'];
-    } else {
-        $where = "WHERE a.sol_status = " . $_POST['sol_status'];
-    }
-}
 
 if ($_POST['data_ini'] != '') {
     if($where != '') {
@@ -56,21 +41,6 @@ if ($_POST['data_ini'] != '') {
     }
 }
 
-if ($_POST['atp_cod'] != '') {
-    if ($where != '') {
-        $where .= " AND a.atp_cod = " . $_POST['atp_cod'];
-    } else {
-        $where = " WHERE a.atp_cod = " . $_POST['atp_cod'];
-    }
-}
-
-if ($_POST['afr_cod'] != '') {
-    if ($where != '') {
-        $where .= " AND atp_cod = " . $_POST['afr_cod'];
-    } else {
-        $where = " WHERE a.afr_cod = " . $_POST['afr_cod'];
-    }
-}
 
 $sql = "SELECT
         	a.ati_cod,
