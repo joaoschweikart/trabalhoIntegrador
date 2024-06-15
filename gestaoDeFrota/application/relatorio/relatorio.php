@@ -1,14 +1,14 @@
 <?php
-require_once('../../../../library/vendor/autoload.php');
-require_once('../../../../library/MySql.php');
-require_once('../../../../library/DataManipulation.php');
+require_once('../../library/vendor/autoload.php');
+require_once('../../library/MySql.php');
+require_once('../../library/DataManipulation.php');
 
 use Dompdf\Dompdf;
 
 $dompdf = new Dompdf();
 $data = new DataManipulation();
 
-$logoPath = file_get_contents('../../../images/logo-system.png');
+$logoPath = file_get_contents('../images/logo-system.png');
 $logoData = base64_encode($logoPath);
 $logoTag = '<img src="data:image/png;base64,' . $logoData . '" width="200"/>';
 
@@ -16,57 +16,34 @@ $dompdf->setPaper('A4', 'landscape');
 
 $usuario = $_POST['usuario'];
 
-if ($_POST['usu_cod'] != '') {
-    if ($where != '') {
-        $where .= " AND u.usu_cod = " . $_POST['usu_cod'];
-    } else {
-        $where = "WHERE u.usu_cod = " . $_POST['usu_cod'];
-    }
+$where = '';
+
+if($_POST['vei_cod']){
+	$where = " AND v.vei_cod = ".$_POST['vei_cod'];
 }
 
-if ($_POST['set_cod'] != '') {
-    if ($where != '') {
-        $where .= " AND a.set_cod = " . $_POST['set_cod'];
-    } else {
-        $where = "WHERE a.set_cod = " . $_POST['set_cod'];
-    }
-}
-
-
-if ($_POST['data_ini'] != '') {
-    if($where != '') {
-        $where .= " AND a.ati_data >= '" . $_POST['data_ini'] . "' AND a.ati_data <='" . $_POST['data_fim'] . "'";
-    }else{
-        $where = " WHERE a.ati_data >= '" . $_POST['data_ini'] . "' AND a.ati_data <='" . $_POST['data_fim'] . "'";
-    }
-}
-
+$data_ini = $_POST['data_ini'];	
+$data_fim = $_POST['data_fim'];
+$data_ini_formatada = date('Y/m/d', strtotime($data_ini)) . ' 00:00:00';
+$data_fim_formatada = date('Y/m/d', strtotime($data_fim)) . ' 23:59:59';
 
 $sql = "SELECT
-        	a.ati_cod,
-			a.ati_data,
-			a.sol_status,
-            a.atp_cod,
-            t.atp_descricao,
-			a.afr_cod,
-			f.afr_descricao,
-            a.cli_cod,
-			c.cli_nome,
-            a.ati_solicitante,
-			a.ati_cargo,
-			a.ati_descricao,
-            a.ati_tempo,
-            a.usu_cod,
-			u.usu_nome			
-        FROM
-            atividade AS a
-			INNER JOIN atividade_tipo AS t ON t.atp_cod = a.atp_cod
-			INNER JOIN atividade_forma AS f ON f.afr_cod = a.afr_cod
-            INNER JOIN cliente AS c ON a.cli_cod = c.cli_cod
-			INNER JOIN usuario AS u ON u.usu_cod = a.usu_cod
-		" . $where;
-
-$solicitacao = $data->find('dynamic', $sql);
+			a.usu_cod,
+			a.age_titulo,
+			a.age_descricao,
+			a.vei_cod,
+			a.age_hora_ini,
+			a.age_hora_fim,
+			v.vei_nome,
+			u.usu_nome
+		FROM
+			agenda a
+			JOIN veiculo v ON (v.vei_cod = a.vei_cod)
+			JOIN usuario u ON (u.usu_cod = a.usu_cod)
+		WHERE
+			age_hora_ini >='$data_ini_formatada'
+			AND age_hora_fim <= '$data_fim_formatada'".$where;
+$agendamento = $data->find('dynamic', $sql);
 
 $html = '
 
@@ -92,7 +69,7 @@ td {
 					margin-right: auto;
 				}
 			</style>
-            <title>Relatatório de Solicitações</title>
+            <title>Relatatório de agendamentos</title>
         </head>
         <body style="font-family: Arial; font-size: 0.8em">
 			<table style="margin-left: auto; margin-right: auto">
@@ -113,65 +90,33 @@ td {
 				<table style="border-collapse: collapse; width: 100%; margin-top: 20px; margin-bottom: 20px;">
 					<thead>
 						<tr style="border: 1px solid black; padding: 8px; text-align: left;">
-							<th>Código</th>
 							<th>Data</th>
-							<th>Tipo</th>
-							<th>Atendimento</th>
-							<th>Cliente</th>
-							<th>Solicitante (Cargo)</th>
-							<th style="width:50px">Descricao</th>
-							<th>Tempo de Execução</th>
-							<th>Atendido por</th>
+							<th>Veículo</th>
+							<th>Funcionário</th>
+							<th>Título do agendamento</th>
+							<th>Descrição</th>
 						</tr>
 					</thead>
 				<tbody>';
-for ($i = 0; $i < count($solicitacao); $i++) {
-    $solicitacao[$i]['ati_data'] = implode("/", array_reverse(explode("-", $solicitacao[$i]['ati_data'])));
-
-    switch ($solicitacao[$i]['sol_status']) {
-        case 0:
-            $solicitacao[$i]['sol_status'] = "Pendente";
-            break;
-
-        case 1:
-            $solicitacao[$i]['sol_status'] = "Andamento";
-            break;
-
-        case 2:
-            $solicitacao[$i]['sol_status'] = "Concluído";
-            break;
-
-        case 3:
-            $solicitacao[$i]['sol_status'] = "Cancelado";
-            break;
-    }
-
+for ($i = 0; $i < count($agendamento); $i++) {
     $html .= '
 					<tr>
-						<td style="border: 1px solid black; padding: 8px;">' . str_pad($solicitacao[$i]['ati_cod'], 4, '0', STR_PAD_LEFT) . '</td>
-						<td style="border: 1px solid black; padding: 8px;">' . $solicitacao[$i]['ati_data'] . '</td>
-						<td style="border: 1px solid black; padding: 8px;">' . $solicitacao[$i]['atp_descricao'] . '</td>
-						<td style="border: 1px solid black; padding: 8px;">' . $solicitacao[$i]['afr_descricao'] . '</td>
-						<td style="border: 1px solid black; padding: 8px;">' . $solicitacao[$i]['cli_nome'] . '</td>
-						<td style="border: 1px solid black; padding: 8px;">' . $solicitacao[$i]['ati_solicitante'] . '(' . $solicitacao[$i]['ati_cargo'] . ')</td>
-						<td style="border: 1px solid black; padding: 8px;">' . $solicitacao[$i]['ati_descricao'] . '</td>
-						<td style="border: 1px solid black; padding: 8px;">' . $solicitacao[$i]['ati_tempo'] . '</td>
-                        <td style="border: 1px solid black; padding: 8px;">' . $solicitacao[$i]['usu_nome'] . '</td>
+						<td style="border: 1px solid black; width: 20%">' . $agendamento[$i]['age_hora_ini'] . ' até '.$agendamento[$i]['age_hora_fim'].'</td>
+						<td style="border: 1px solid black; width: 10%">' . $agendamento[$i]['vei_nome'] . '</td>
+						<td style="border: 1px solid black; width: 20%">' . $agendamento[$i]['usu_nome'] . '</td>
+						<td style="border: 1px solid black; width: 10%;">' . $agendamento[$i]['age_titulo'] . '</td>
+						<td style="border: 1px solid black; padding: 8px;">' . $agendamento[$i]['age_descricao'].'</td>
 					</tr>';
 }
 
 $html .= '
 </tbody>
 
-</table>
-<div class="assinatura" style="text-align: center; margin-left: auto; margin-right: auto">
-    <p>___________________________________</p>
-    <h5>Assinatura</h5>
-</div>';
+</table>';
 $dompdf->loadHtml($html);
 
 // Renderiza o documento PDF
 $dompdf->render();
 
 // Exibe o documento PDF no navegador
-$dompdf->stream('listagem-de-solicitacoes.pdf', array('Attachment' => false));
+$dompdf->stream('listagem-de-agendamentos.pdf', array('Attachment' => false));
