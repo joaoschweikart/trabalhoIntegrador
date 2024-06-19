@@ -53,7 +53,7 @@
                     
                     <div class="col-sm-3">
                         <label class="control-label" for="vei_cor">Cor: </label>
-                        <small>(Essa será a cor que ficará visível na agenda de veículos)</small>
+                        <small>(Essa será a cor que ficará visível na agenda)</small>
                         <input name="vei_cor" type="color" class="form-control blockenter" id="vei_cor" style="text-transform:uppercase;" required />
                     </div>
                 </div>
