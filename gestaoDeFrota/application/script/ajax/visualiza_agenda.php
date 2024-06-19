@@ -23,11 +23,11 @@ if ($_GET['age_cod'] != '') {
 	$data_fim = $aux_fim[0];
 	$hora_fim = $aux_fim[1];
 
-	$sql = "SELECT agt_descricao, agt_cod FROM agenda_tipo WHERE agt_situacao = 1";
-	$tipo = $data->find('dynamic', $sql);
-
 	$sql = "SELECT vei_nome, vei_cod FROM veiculo WHERE vei_situacao = 1";
 	$veiculo = $data->find('dynamic', $sql);
+
+	$sql = "SELECT cid_nome, cid_cod FROM cidade WHERE cid_situacao = 1";
+	$cidade = $data->find('dynamic', $sql);
 }
 ?>
 	<div class="modal-header">
@@ -60,22 +60,6 @@ if ($_GET['age_cod'] != '') {
 				</div>
 
 				<div class="col-sm-2">
-					<label class="control-label" for="data_fim">Tipo Agendamento:</label>
-					<select name="age_tipo" type="text" class="form-control blockenter" id="agt_cod" onchange="habilita(this.value)" disabled>
-						<option value="" selected>--SELECIONE--</option>
-						<?php
-							for ($i = 0; $i < count($tipo); $i++) {
-								if ($result[0]['age_tipo'] == $tipo[$i]['agt_cod']) {
-									echo '<option value="' . $tipo[$i]['agt_cod'] . '" selected>' . $tipo[$i]['agt_descricao'] . '</option>';
-								} else {
-									echo '<option value="' . $tipo[$i]['agt_cod'] . '">' . $tipo[$i]['agt_descricao'] . '</option>';
-								}
-							}
-						?>
-					</select>
-				</div>
-
-				<div class="col-sm-2">
 					<label class="control-label" for="data_fim">Veículo:</label>
 					<select name="vei_cod" type="text" class="form-control blockenter" id="vei_cod" disabled>
 						<option value="" selected>--SELECIONE--</option>
@@ -83,8 +67,20 @@ if ($_GET['age_cod'] != '') {
 							for ($i = 0; $i < count($veiculo); $i++) {
 								if ($result[0]['vei_cod'] == $veiculo[$i]['vei_cod']) {
 									echo '<option value="' . $veiculo[$i]['vei_cod'] . '" selected>' . $veiculo[$i]['vei_nome'] . '</option>';
-								} else {
-									echo '<option value="' . $veiculo[$i]['vei_cod'] . '" >' . $veiculo[$i]['vei_nome'] . '</option>';
+								}
+							}
+						?>
+					</select>
+				</div>
+
+				<div class="col-sm-2">
+					<label class="control-label" for="cid_cod">Cidade:</label>
+					<select name="cid_cod" type="text" class="form-control blockenter" id="cid_cod" disabled>
+						<option value="" selected>--SELECIONE--</option>
+						<?php
+							for ($i = 0; $i < count($cidade); $i++) {
+								if ($result[0]['cid_cod'] == $cidade[$i]['cid_cod']) {
+									echo '<option value="' . $cidade[$i]['cid_cod'] . '" selected>' . $cidade[$i]['cid_nome'] . '</option>';
 								}
 							}
 						?>
@@ -98,7 +94,7 @@ if ($_GET['age_cod'] != '') {
 					<input name="age_titulo" type="text" class="form-control blockenter" value="<?php echo $result[0]['age_titulo'] ?>" id="age_titulo" style="text-transform: uppercase" disabled>
 				</div>
 				<div class="col-sm-4">
-					<label for="usu_nome" class="control-label">Organizador:</label>
+					<label for="usu_nome" class="control-label">Usuário:</label>
 					<input name="usu_nome" type="text" class="form-control blockenter" value="<?php echo $cliente[0]['usu_nome'] ?>" id="age_titulo" style="text-transform: uppercase" disabled>
 				</div>
 			</div>
@@ -120,10 +116,6 @@ if ($_GET['age_cod'] != '') {
 			$data_age = strtotime($data_fim);
 			
 			if($_GET['user'] == $result[0]['usu_cod']){	
-				if($tipo[0]['agt_cod'] == 1){
-					echo '<button class="btn-warning btn" onclick="presta_conta('.$_GET['age_cod'].')"><i class="fa fa-money"></i> Prestar Contas</button>';
-					echo '<button class="btn-danger btn" onclick="deleta('.$_GET['age_cod'] . ', \'' . $result[0]['age_titulo'] . '\''.');"><i class="fa fa-trash"></i> Excluir</button>';
-				}
 				if($hoje < $data_age){
 					echo '<button class="btn-success btn" onclick="editar('.$_GET['age_cod'].')"><i class="fa fa-pencil"></i> Editar</button>';
 					echo '<button class="btn-danger btn" onclick="deleta('.$_GET['age_cod'] . ', \'' . $result[0]['age_titulo'] . '\''.');"><i class="fa fa-trash"></i> Excluir</button>';

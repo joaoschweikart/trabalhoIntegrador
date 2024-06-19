@@ -1,22 +1,42 @@
 <?php
-if ($_SESSION['gestaoVeiculos_userPermissao'] != 1 && ($_SESSION['gestaoVeiculos_userPermissao']) != 2) {
-    echo '<script>window.location="?module=index&acao=logout"</script>';
-    exit();
-}
+    if ($_SESSION['gestaoVeiculos_userPermissao'] != 1 && ($_SESSION['gestaoVeiculos_userPermissao']) != 2) {
+        echo '<script>window.location="?module=index&acao=logout"</script>';
+        exit();
+    }
 
-$sql = "SELECT agt_descricao, agt_cod FROM agenda_tipo WHERE agt_situacao = 1";
-$tipo = $data->find('dynamic', $sql);
+    $sql = "SELECT vei_nome, vei_cod FROM veiculo WHERE vei_situacao = 1";
+    $veiculo = $data->find('dynamic', $sql);
 
+    $sql = "SELECT cid_nome, cid_cod FROM cidade WHERE cid_situacao = 1";
+    $cidade = $data->find('dynamic', $sql);
 ?>
+
+<script>
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        showMethod: "slideDown",
+        timeOut: 5000
+    };
+
+    <?php
+        switch ($_GET[ms]) {
+            case 1:
+                echo 'toastr.info("O veículo selecionado não estará disponível para a data selecionada", "Veículo indisponível!");';
+                break;
+        }
+    ?>
+</script>
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-9 col-xs-8">
         <h2>Agendamentos</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="?module=agendamento&acao=lista">Sala</a>
+                <a href="?module=agendamento&acao=lista">Veículos</a>
             </li>
             <li class="active">
-                <strong>Novo agendamento da sala de reuniões</strong>
+                <strong>Novo agendamento de veículos</strong>
             </li>
         </ol>
     </div>
@@ -32,7 +52,7 @@ $tipo = $data->find('dynamic', $sql);
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>Agendamento de sala</h5>
+            <h5>Agendamento do veículo</h5>
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -50,6 +70,11 @@ $tipo = $data->find('dynamic', $sql);
                         <label class="control-label" for="data_ini">Data Início:</label>
                         <input name="data_ini" type="date" class="form-control blockenter" id="data_ini" style="text-transform:uppercase;" min="<?php echo date('Y-m-d', strtotime('-1 day')); ?>" onchange="dataMin(this.value)" required />
                     </div>
+
+                    <div class="col-sm-2">
+                        <label class="control-label" for="age_hora_ini">Hora Início:</label>
+                        <input name="age_hora_ini" type="time" class="form-control blockenter" id="age_hora_ini" style="text-transform:uppercase;" required />
+                    </div>
                     
                     <div class="col-sm-2">
                         <label class="control-label" for="data_fim">Data Final:</label>
@@ -57,29 +82,33 @@ $tipo = $data->find('dynamic', $sql);
                     </div>
 
                     <div class="col-sm-2">
-                        <label class="control-label" for="age_hora_ini">Hora Início:</label>
-                        <input name="age_hora_ini" type="time" class="form-control blockenter" id="age_hora_ini" style="text-transform:uppercase;" onchange="horaMin(this.value)" required />
-                    </div>
-                    
-                    <div class="col-sm-2">
                         <label class="control-label" for="age_hora_fim">Hora Fim:</label>
                         <input name="age_hora_fim" type="time" class="form-control blockenter" id="age_hora_fim" style="text-transform:uppercase;" required />
                     </div>
 
-
                     <div class="col-sm-2">
-                        <label class="control-label" for="data_fim">Tipo de Agendamento:</label>
-                        <select name="age_tipo" type="text" class="form-control blockenter" id="agt_cod" onchange=" busca_disp(this.value)">
+                        <label class="control-label" for="data_fim">Veículo:</label>
+                        <select name="vei_cod" type="text" class="form-control blockenter" id="vei_cod" required>
                             <option value="" selected>--SELECIONE--</option>
                             <?php
-                                for ($i = 0; $i < count($tipo); $i++) {
-                                    echo '<option value="' . $tipo[$i]['agt_cod'] . '">' . $tipo[$i]['agt_descricao'] . '</option>';
-                                }
+                                for ($i = 0; $i < count($veiculo); $i++) {
+                                    echo '<option value="' . $veiculo[$i]['vei_cod'] . '">' . $veiculo[$i]['vei_nome'] . '</option>';
+                                }    
                             ?>
                         </select>
                     </div>
 
-                    <div id="disp"></div>
+                    <div class="col-sm-2">
+                        <label class="control-label" for="cid_cod">Cidade:</label>
+                        <select name="cid_cod" type="text" class="form-control blockenter" id="cid_cod" required>
+                            <option value="" selected>--SELECIONE--</option>
+                            <?php
+                                for ($i = 0; $i < count($cidade); $i++) {
+                                    echo '<option value="' . $cidade[$i]['cid_cod'] . '">' . $cidade[$i]['cid_nome'] . '</option>';
+                                }    
+                            ?>
+                        </select>
+                    </div>
 
                 </div>
                 <div class="row form-group">
@@ -88,10 +117,7 @@ $tipo = $data->find('dynamic', $sql);
                         <input name="age_titulo" type="text" class="form-control blockenter" id="age_titulo" style="text-transform: uppercase" required>
                     </div>
                 </div>
-
-
                 <div class="row form-group">
-
                     <div class="col-sm-12">
                         <label for="age_descricao" class="control-label">Descrição:</label>
                         <textarea name="age_descricao" type="text" class="form-control blockcenter" id="age_descricao" style="text-transform:uppercase; height: 200px;" required></textarea>
@@ -103,38 +129,6 @@ $tipo = $data->find('dynamic', $sql);
     </div>
 
     <script>
-        function busca_disp(opt){
-            
-            var data_ini = document.getElementById('data_ini').value;
-            var hora_ini = document.getElementById('age_hora_ini').value;
-            var data_fim = document.getElementById('data_fim').value;
-            var hora_fim = document.getElementById('age_hora_fim').value;
-            div = 'disp';
-
-            switch(opt) {
-                case '1':
-
-                    url = 'application/script/ajax/busca_disp.php?data_ini='+data_ini+'&data_fim='+data_fim+'&hora_ini='+hora_ini+'&hora_fim='+hora_fim+'&opt=1';
-                    
-                    ajax(url, div);
-                break;
-
-                case '2':
-                    
-                    url = 'application/script/ajax/busca_disp.php?data_ini='+data_ini+'&data_fim='+data_fim+'&hora_ini='+hora_ini+'&hora_fim='+hora_fim+'&opt=2';
-                    ajax(url, div);
-
-                    setTimeout(function() {
-                        var ocupado = document.getElementById('ocupado');
-
-                        block_envio(ocupado.value);
-                    }, 500);
-
-                    //block_envio(ocupado.value);
-
-                break;
-            }            
-        }
 
         function block_envio(val) {
             var botao = document.getElementById('btn-envio');
@@ -156,10 +150,6 @@ $tipo = $data->find('dynamic', $sql);
 
         function voltar() {
             window.location.href = '?module=agendamento&acao=lista';
-        }
-
-        function habilita(opt) {
-            
         }
 
         $(document).ready(function() {

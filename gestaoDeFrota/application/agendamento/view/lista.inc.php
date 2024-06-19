@@ -1,4 +1,23 @@
 <?php
+    if ($_SESSION['gestaoVeiculos_userPermissao'] != 1 && $_SESSION['gestaoVeiculos_userPermissao'] != 2) {
+        echo '<script>window.location="?module=index&acao=logout"</script>';
+    }
+	
+	$sql = "SELECT * FROM agenda as a
+			LEFT JOIN veiculo as v ON (a.vei_cod = v.vei_cod)";
+	$event = $data->find('dynamic', $sql);
+?>
+
+<script>
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        showMethod: "slideDown",
+        timeOut: 5000
+    };
+
+    <?php
+
 	switch ($_GET[ms]) {
 		case 1:
 			echo 'toastr.success("Agendamento cadastrado com sucesso!", "Incluido!");';
@@ -13,51 +32,18 @@
 			break;
 	}
 
-    if ($_SESSION['gestaoVeiculos_userPermissao'] != 1 && $_SESSION['gestaoVeiculos_userPermissao'] != 2) {
-        echo '<script>window.location="?module=index&acao=logout"</script>';
-    }
-	
-	$sql = "SELECT * FROM agenda";
-	$event = $data->find('dynamic', $sql);
-
-	$sql = "SELECT vei_cod, vei_nome FROM veiculo WHERE vei_situacao = 1";
-	$veiculo = $data->find('dynamic', $sql);
-?>
-
-
-<script>
-    toastr.options = {
-        closeButton: true,
-        progressBar: true,
-        showMethod: "slideDown",
-        timeOut: 5000
-    };
-
-    <?php
         for($i=0; $i<count($event); $i++){
-			switch ($event[$i]['age_tipo']){
-                case 1: //veiculo
-                    $age_tipo = "Veículo";
-					$age_cor  = $event[$i]['vei_cor'];
-					break;
-                default: //outro
-					$age_tipo = "Outro";    
-					$age_cor  = "#08c0d4";
-                    break;
-            }
-
             $dados .= '{
                 id: '.$event[$i]['age_cod'].',
                 title: "'.$event[$i]['age_titulo'].'",
                 start: "'.$event[$i]['age_hora_ini'].'",
                 end: "'.$event[$i]['age_hora_fim'].'",
-                color: "'.$age_cor.'",
+                color: "'.$event[$i]['vei_cor'].'",
                 usu_cod: "'.$_SESSION['gestaoVeiculos_userId'].'",
 				dt_ini: "'.$event[$i]['age_hora_ini'].'",
 				dt_fim: "'.$event[$i]['age_hora_fim'].'",
 				v_dt_fim: "'.strtotime($event[$i]['age_hora_fim']).'",
 				v_hoje: "'.strtotime(date('Y-m-d H:i:s')).'",
-				age_tipo: "'.$age_tipo.'",
 				permission: "'.$_SESSION['gestaoVeiculos_userPermissao'].'",
             },';
         }
@@ -98,7 +84,6 @@
     <script>
 
 		function reloadOpener() {
-			// recarrega a página original quando o popup for fechado
 			window.opener.location.reload();
 		}
 		
@@ -132,7 +117,7 @@
 			},
 			locale: 'pt-br',
 			editable: false,
-			eventLimit: true, // allow "more" link when too many events
+			eventLimit: true,
 			events: [
 				<?php echo $dados;	?>
 			],

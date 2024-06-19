@@ -7,7 +7,6 @@
     $sql = "SELECT * FROM agenda WHERE age_cod =".$_GET['id'];
     $result = $data->find('dynamic', $sql);
 
-    
 	$aux_ini = explode(" ", $result[0]['age_hora_ini']);
     
 	$data_ini = $aux_ini[0];
@@ -18,21 +17,21 @@
 	$data_fim = $aux_fim[0];
 	$hora_fim = $aux_fim[1];
     
-    $sql = "SELECT agt_descricao, agt_cod FROM agenda_tipo WHERE agt_situacao = 1";
-    $tipo = $data->find('dynamic', $sql);
-    
     $sql = "SELECT vei_nome, vei_cod FROM veiculo WHERE vei_situacao = 1";
     $veiculo = $data->find('dynamic', $sql);
+
+    $sql = "SELECT cid_nome, cid_cod FROM cidade WHERE cid_situacao = 1";
+    $cidade = $data->find('dynamic', $sql);
 ?>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-9 col-xs-8">
         <h2>Agendamentos</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="?module=agendamento&acao=lista">Sala</a>
+                <a href="?module=agendamento&acao=lista">Veículo</a>
             </li>
             <li class="active">
-                <strong>Novo agendamento da sala de reuniões</strong>
+                <strong>Novo agendamento de veículo</strong>
             </li>
         </ol>
     </div>
@@ -48,7 +47,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>Agendamento de sala</h5>
+            <h5>Agendamento do veículo</h5>
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -84,38 +83,38 @@
                     </div>
 
                     <div class="col-sm-2">
-                        <label class="control-label" for="data_fim">Tipo de Agendamento:</label>
-                        <select name="age_tipo" type="text" class="form-control blockenter" id="agt_cod" onchange="habilita(this.value)">
+                        <label class="control-label" for="data_fim">Veículo:</label>
+                        <select name="vei_cod" type="text" class="form-control blockenter" id="vei_cod">
                             <option value="" selected>--SELECIONE--</option>
                             <?php
-                                for ($i = 0; $i < count($tipo); $i++) {
-                                    if($result[0]['age_tipo'] == $tipo[$i]['agt_cod']){
-                                        echo '<option value="' . $tipo[$i]['agt_cod'] . '"selected>' . $tipo[$i]['agt_descricao'] . '</option>';
+                                for ($i = 0; $i < count($veiculo); $i++) {
+                                    if($result[0]['vei_cod'] == $veiculo[$i]['vei_cod']){
+                                        echo '<option value="' . $veiculo[$i]['vei_cod'] . '" selected>' . $veiculo[$i]['vei_nome'] . '</option>';
                                     }else{
-                                        echo '<option value="' . $tipo[$i]['agt_cod'] . '">' . $tipo[$i]['agt_descricao'] . '</option>';
+                                        echo '<option value="' . $veiculo[$i]['vei_cod'] . '">' . $veiculo[$i]['vei_nome'] . '</option>';
+
                                     }
                                 }    
                             ?>
                         </select>
                     </div>
-                    <?php if($tipo[0]['agt_cod'] == 1){ ?>
-                        <div class="col-sm-2">
-                            <label class="control-label" for="data_fim">Veículo:</label>
-                            <select name="vei_cod" type="text" class="form-control blockenter" id="vei_cod">
-                                <option value="" selected>--SELECIONE--</option>
-                                <?php
-                                    for ($i = 0; $i < count($veiculo); $i++) {
-                                        if($result[0]['vei_cod'] == $veiculo[$i]['vei_cod']){
-                                            echo '<option value="' . $veiculo[$i]['vei_cod'] . '" selected>' . $veiculo[$i]['vei_nome'] . '</option>';
-                                        }else{
-                                            echo '<option value="' . $veiculo[$i]['vei_cod'] . '">' . $veiculo[$i]['vei_nome'] . '</option>';
 
-                                        }
-                                    }    
-                                ?>
-                            </select>
-                        </div>
-                    <?php } ?>
+                    <div class="col-sm-2">
+                        <label class="control-label" for="data_fim">Município:</label>
+                        <select name="cid_cod" type="text" class="form-control blockenter" id="cid_cod">
+                            <option value="" selected>--SELECIONE--</option>
+                            <?php
+                                for ($i = 0; $i < count($cidade); $i++) {
+                                    if($result[0]['cid_cod'] == $cidade[$i]['cid_cod']){
+                                        echo '<option value="' . $cidade[$i]['cid_cod'] . '" selected>' . $cidade[$i]['cid_nome'] . '</option>';
+                                    }else{
+                                        echo '<option value="' . $cidade[$i]['cid_cod'] . '">' . $cidade[$i]['cid_nome'] . '</option>';
+
+                                    }
+                                }    
+                            ?>
+                        </select>
+                    </div>
 
                 </div>
                 <div class="row form-group">

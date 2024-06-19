@@ -22,11 +22,6 @@ if($_POST['vei_cod']){
 	$where = " AND v.vei_cod = ".$_POST['vei_cod'];
 }
 
-$data_ini = $_POST['data_ini'];	
-$data_fim = $_POST['data_fim'];
-$data_ini_formatada = date('Y/m/d', strtotime($data_ini)) . ' 00:00:00';
-$data_fim_formatada = date('Y/m/d', strtotime($data_fim)) . ' 23:59:59';
-
 $sql = "SELECT
 			a.usu_cod,
 			a.age_titulo,
@@ -41,8 +36,8 @@ $sql = "SELECT
 			JOIN veiculo v ON (v.vei_cod = a.vei_cod)
 			JOIN usuario u ON (u.usu_cod = a.usu_cod)
 		WHERE
-			age_hora_ini >='$data_ini_formatada'
-			AND age_hora_fim <= '$data_fim_formatada'".$where;
+			age_hora_ini >= '".$_POST['data_ini']."'
+			AND age_hora_fim <= '".$_POST['data_fim']."' ".$where;
 $agendamento = $data->find('dynamic', $sql);
 
 $html = '
@@ -81,7 +76,7 @@ td {
 					</tr>
 					<tr style="text-align: center">
 						<th colspan="2" style="text-align: center; font-size: 1.2em; padding-top: 10px">
-							Relatório de Atividades
+							Relatório de Agendamentos
 						</th>
 					</tr>
 				</thead>

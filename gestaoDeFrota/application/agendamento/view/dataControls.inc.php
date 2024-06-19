@@ -3,20 +3,35 @@
 		
         case 'grava':
 
-			//Concatena data e hora no formato: YYYY-MM-DD HH:MM:SS
+			$periodo_ini = $_POST['data_ini'] . ' ' . $_POST['age_hora_ini'].':00';
+			$periodo_fin = $_POST['data_fim'] . ' ' . $_POST['age_hora_fim'].':00';
+
+			$sql = 'SELECT * FROM agenda 
+						WHERE vei_cod = '.$_POST['vei_cod'].' AND
+						(
+							(age_hora_ini > "'.$periodo_ini.'" AND age_hora_fim < "'.$periodo_fin.'") OR
+							(age_hora_ini < "'.$periodo_ini.'" AND age_hora_fim > "'.$periodo_fin.'") OR
+							(age_hora_ini > "'.$periodo_ini.'" AND age_hora_fim > "'.$periodo_fin.'" AND age_hora_ini < "'.$periodo_fin.'") OR
+							(age_hora_ini < "'.$periodo_ini.'" AND age_hora_fim < "'.$periodo_fin.'" AND age_hora_fim > "'.$periodo_ini.'")
+						)';
+
+			if(count($result) > 0){
+				echo '<script>window.location = "?module=agendamento&acao=novo&ms=1";</script>';
+			}
+
 			$data_ini = $_POST['data_ini'];
 			$age_hora_ini = $_POST['age_hora_ini'];
-			$aux['age_hora_ini'] = date('Y/m/d H:i:s', strtotime("$data_ini $age_hora_ini"));
+			$aux['age_hora_ini'] = date('Y-m-d H:i:s', strtotime("$data_ini $age_hora_ini"));
 
 			$data_fim = $_POST['data_fim'];
 			$age_hora_fim = $_POST['age_hora_fim'];
-			$aux['age_hora_fim'] = date('Y/m/d H:i:s', strtotime("$data_fim $age_hora_fim"));
+			$aux['age_hora_fim'] = date('Y-m-d H:i:s', strtotime("$data_fim $age_hora_fim"));
 
 			$aux['usu_cod']    			= $_SESSION['gestaoVeiculos_userId'];
 			$aux['age_titulo']    		= addslashes(mb_strtoupper($_POST['age_titulo'], 'UTF-8'));
 			$aux['age_descricao']		= addslashes(mb_strtoupper($_POST['age_descricao'], 'UTF-8'));
-			$aux['age_tipo']    		= $_POST['age_tipo'];
 			$aux['vei_cod']				= $_POST['vei_cod'];
+			$aux['cid_cod']				= $_POST['cid_cod'];
 
 			$data->tabela = 'agenda';
 			$data->add($aux);
@@ -50,16 +65,16 @@
 
 			$data_ini = $_POST['data_ini'];
 			$age_hora_ini = $_POST['age_hora_ini'];
-			$aux['age_hora_ini'] = date('Y/m/d H:i:s', strtotime("$data_ini $age_hora_ini"));
+			$aux['age_hora_ini'] = date('Y-m-d H:i:s', strtotime("$data_ini $age_hora_ini"));
 
 			$data_fim = $_POST['data_fim'];
 			$age_hora_fim = $_POST['age_hora_fim'];
-			$aux['age_hora_fim'] = date('Y/m/d H:i:s', strtotime("$data_fim $age_hora_fim"));
+			$aux['age_hora_fim'] = date('Y-m-d H:i:s', strtotime("$data_fim $age_hora_fim"));
 			
 			$aux['age_titulo']    		= addslashes(mb_strtoupper($_POST['age_titulo'], 'UTF-8'));
 			$aux['age_descricao']		= addslashes(mb_strtoupper($_POST['age_descricao'], 'UTF-8'));
-			$aux['age_tipo']    		= $_POST['age_tipo'];
 			$aux['vei_cod']				= $_POST['vei_cod'];
+			$aux['cid_cod']				= $_POST['cid_cod'];
 
 			$data->tabela = 'agenda';
 			$data->update($aux);

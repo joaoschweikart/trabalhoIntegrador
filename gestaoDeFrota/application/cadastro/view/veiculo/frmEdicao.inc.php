@@ -5,7 +5,6 @@
 
     $sql = "SELECT * FROM veiculo WHERE vei_situacao = 1 AND vei_cod = ".$_POST['param_0'];
     $result = $data->find('dynamic', $sql);
-
 ?>
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -47,14 +46,20 @@
 
                 <div class="row form-group">
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-4">
                         <label class="control-label" for="vei_nome">Modelo:</label>
                         <input name="vei_nome" type="text" class="form-control blockenter" id="vei_nome" value="<?php echo $result[0]['vei_nome']; ?>" style="text-transform:uppercase;" required />
                     </div>
 
-                    <div class="col-sm-2">
+                    <div class="col-sm-4">
                         <label class="control-label" for="vei_placa">Placa:</label>
                         <input name="vei_placa" type="text" class="form-control blockenter" id="vei_placa" style="text-transform:uppercase;" value="<?php echo $result[0]['vei_placa']; ?>" required />
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label class="control-label" for="vei_cor">Cor: </label>
+                        <small>(Essa será a cor que ficará visível na agenda)</small>
+                        <input name="vei_cor" type="color" class="form-control blockenter" id="vei_cor" style="text-transform:uppercase;" value="<?php echo $result[0]['vei_cor']; ?>" required />
                     </div>
                 </div>
 
