@@ -3,8 +3,8 @@
 ## Alunos
 - João Vitor Schweikart - Matrícula: 2311101008
 - Henrique Ribeiro Rodrigues - Matrícula: 2211100005
-- Rafael Cordeiro dos Santos - Matrícula: xxxxxxxxxx
-- Gabriel Santos Costa - Matrícula: xxxxxxxxxx
+- Rafael Cordeiro dos Santos - Matrícula: 2211100007 (cursa somente PROG II)
+- Gabriel Santos Costa - Matrícula: 2311100036 (cursa somente ENG SOFT)
 
 ## Como Rodar o Sistema em PHP Utilizando XAMPP
 
