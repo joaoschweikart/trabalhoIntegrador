@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09-Jun-2024 às 21:26
+-- Tempo de geração: 24-Jun-2024 às 04:13
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 7.4.33
 
@@ -32,37 +32,11 @@ CREATE TABLE `agenda` (
   `usu_cod` int(11) DEFAULT NULL,
   `age_titulo` text DEFAULT NULL,
   `age_descricao` text DEFAULT NULL,
-  `age_tipo` int(11) DEFAULT NULL,
   `vei_cod` int(11) DEFAULT NULL,
   `age_hora_ini` varchar(100) DEFAULT NULL,
-  `age_hora_fim` varchar(100) DEFAULT NULL
+  `age_hora_fim` varchar(100) DEFAULT NULL,
+  `cid_cod` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `agenda`
---
-
-INSERT INTO `agenda` (`age_cod`, `usu_cod`, `age_titulo`, `age_descricao`, `age_tipo`, `vei_cod`, `age_hora_ini`, `age_hora_fim`) VALUES
-(2, 7, 'TESTE', 'teste', 1, 1, '2024/06/07 19:06:00', '2024/06/18 17:08:00');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `agenda_tipo`
---
-
-CREATE TABLE `agenda_tipo` (
-  `agt_cod` int(11) NOT NULL,
-  `agt_descricao` text NOT NULL,
-  `agt_situacao` int(11) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `agenda_tipo`
---
-
-INSERT INTO `agenda_tipo` (`agt_cod`, `agt_descricao`, `agt_situacao`) VALUES
-(1, 'VEICULO', 1);
 
 -- --------------------------------------------------------
 
@@ -82,20 +56,26 @@ CREATE TABLE `cidade` (
 --
 
 INSERT INTO `cidade` (`cid_cod`, `cid_nome`, `est_uf`, `cid_situacao`) VALUES
-(1, 'ALTO BELA VISTA', 'SC', 1),
-(2, 'ARABUTÃ', 'SC', 1),
-(3, 'CONCÓRDIA', 'SC', 1),
-(4, 'IPIRA', 'SC', 1),
-(5, 'IPUMIRIM', 'SC', 1),
-(6, 'IRANI', 'SC', 1),
-(7, 'ITÁ', 'SC', 1),
-(8, 'JABORÁ', 'SC', 1),
-(9, 'LINDÓIA DO SUL', 'SC', 1),
-(10, 'PERITIBA', 'SC', 1),
-(11, 'PIRATUBA', 'SC', 1),
-(12, 'PRESIDENTE CASTELLO BRANCO', 'SC', 1),
-(13, 'SEARA', 'SC', 1),
-(14, 'XAVANTINA', 'SC', 1);
+(1, 'AGUAS DE CHAPECÓ', 'SC', 1),
+(2, 'AGUAS FRIAS', 'SC', 1),
+(3, 'ARVOREDO', 'SC', 1),
+(4, 'CAXAMBÚ DO SUL', 'SC', 1),
+(5, 'CHAPECÓ', 'SC', 1),
+(6, 'CORDILHEIRA ALTA', 'SC', 1),
+(7, 'CORONEL FREITAS', 'SC', 1),
+(8, 'FORMOSA DO SUL', 'SC', 1),
+(9, 'GUATAMBU', 'SC', 1),
+(10, 'JARDINÓPOLIS', 'SC', 1),
+(11, 'NOVA ERECHIM', 'SC', 1),
+(12, 'NOVA ITABERABA', 'SC', 1),
+(13, 'PAIAL', 'SC', 1),
+(14, 'PINHALZINHO', 'SC', 1),
+(15, 'PLANALTO ALEGRE', 'SC', 1),
+(16, 'SANTIAGO DO SUL', 'SC', 1),
+(17, 'SERRA ALTA', 'SC', 1),
+(18, 'SUL BRASIL', 'SC', 1),
+(19, 'SÃO CARLOS', 'SC', 1),
+(20, 'UNIÃO DO OESTE', 'SC', 1);
 
 -- --------------------------------------------------------
 
@@ -130,8 +110,6 @@ CREATE TABLE `setor` (
   `set_cod` int(11) NOT NULL,
   `set_nome` text DEFAULT NULL,
   `set_descricao` text DEFAULT NULL,
-  `set_responsavel` int(11) DEFAULT NULL,
-  `fun_cod` int(11) NOT NULL,
   `set_situacao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -139,8 +117,8 @@ CREATE TABLE `setor` (
 -- Extraindo dados da tabela `setor`
 --
 
-INSERT INTO `setor` (`set_cod`, `set_nome`, `set_descricao`, `set_responsavel`, `fun_cod`, `set_situacao`) VALUES
-(1, 'Informática', 'Informática', 8, 1, 1);
+INSERT INTO `setor` (`set_cod`, `set_nome`, `set_descricao`, `set_situacao`) VALUES
+(1, 'Informática', 'Informática', 1);
 
 -- --------------------------------------------------------
 
@@ -182,20 +160,18 @@ CREATE TABLE `usuario` (
   `usu_login` varchar(50) NOT NULL,
   `usu_senha` varchar(2000) NOT NULL,
   `usu_email` varchar(200) DEFAULT NULL,
-  `cli_cod` int(11) NOT NULL,
   `upe_cod` int(11) NOT NULL COMMENT 'usuario_permissao',
   `usu_situacao` int(11) NOT NULL DEFAULT 1,
-  `set_cod` int(11) NOT NULL,
-  `fun_cod` int(11) NOT NULL
+  `set_cod` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `usuario`
 --
 
-INSERT INTO `usuario` (`usu_cod`, `usu_nome`, `usu_login`, `usu_senha`, `usu_email`, `cli_cod`, `upe_cod`, `usu_situacao`, `set_cod`, `fun_cod`) VALUES
-(7, 'ADMIN', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@gmail.com', 0, 1, 1, 1, 0),
-(8, 'FUNCIONARIO', 'funcionario', 'cc7a84634199040d54376793842fe035', 'funcionario@gmail.com', 0, 2, 1, 1, 1);
+INSERT INTO `usuario` (`usu_cod`, `usu_nome`, `usu_login`, `usu_senha`, `usu_email`, `upe_cod`, `usu_situacao`, `set_cod`) VALUES
+(7, 'ADMIN', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@gmail.com', 1, 1, 1),
+(8, 'FUNCIONARIO', 'funcionario', 'cc7a84634199040d54376793842fe035', 'funcionario@gmail.com', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -236,7 +212,24 @@ CREATE TABLE `veiculo` (
 --
 
 INSERT INTO `veiculo` (`vei_cod`, `vei_nome`, `vei_placa`, `vei_situacao`, `vei_cor`) VALUES
-(1, 'GOL', 'IPV4T43', 1, '');
+(1, 'VOLKSWAGEN GOL', 'IPV4T43', 1, '#ecf000'),
+(2, 'CHEVROLET CORSA', 'GRE-321', 1, '#e40101');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `viagem`
+--
+
+CREATE TABLE `viagem` (
+  `via_cod` int(11) NOT NULL,
+  `age_cod` int(11) NOT NULL,
+  `via_km_inicial` int(11) DEFAULT NULL,
+  `via_km_final` int(11) DEFAULT NULL,
+  `via_gastos` varchar(500) DEFAULT NULL,
+  `via_observacoes` varchar(500) DEFAULT NULL,
+  `via_preenchido` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tabelas despejadas
@@ -246,13 +239,10 @@ INSERT INTO `veiculo` (`vei_cod`, `vei_nome`, `vei_placa`, `vei_situacao`, `vei_
 -- Índices para tabela `agenda`
 --
 ALTER TABLE `agenda`
-  ADD PRIMARY KEY (`age_cod`);
-
---
--- Índices para tabela `agenda_tipo`
---
-ALTER TABLE `agenda_tipo`
-  ADD PRIMARY KEY (`agt_cod`);
+  ADD PRIMARY KEY (`age_cod`),
+  ADD KEY `fk_agenda_usuario` (`usu_cod`),
+  ADD KEY `fk_agenda_veiculo` (`vei_cod`),
+  ADD KEY `fk_agenda_cidade` (`cid_cod`);
 
 --
 -- Índices para tabela `cidade`
@@ -264,7 +254,9 @@ ALTER TABLE `cidade`
 -- Índices para tabela `funcionario`
 --
 ALTER TABLE `funcionario`
-  ADD PRIMARY KEY (`fun_cod`);
+  ADD PRIMARY KEY (`fun_cod`),
+  ADD KEY `fk_funcionario_setor` (`set_cod`),
+  ADD KEY `fk_funcionario_usuario` (`usu_cod`);
 
 --
 -- Índices para tabela `setor`
@@ -288,7 +280,9 @@ ALTER TABLE `to_do_list`
 -- Índices para tabela `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`usu_cod`);
+  ADD PRIMARY KEY (`usu_cod`),
+  ADD KEY `fk_usuario_perm` (`upe_cod`),
+  ADD KEY `fk_usuario_setor` (`set_cod`);
 
 --
 -- Índices para tabela `usuario_permissao`
@@ -303,6 +297,13 @@ ALTER TABLE `veiculo`
   ADD PRIMARY KEY (`vei_cod`);
 
 --
+-- Índices para tabela `viagem`
+--
+ALTER TABLE `viagem`
+  ADD PRIMARY KEY (`via_cod`),
+  ADD KEY `fk_agenda_viagem` (`age_cod`);
+
+--
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
@@ -310,19 +311,13 @@ ALTER TABLE `veiculo`
 -- AUTO_INCREMENT de tabela `agenda`
 --
 ALTER TABLE `agenda`
-  MODIFY `age_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de tabela `agenda_tipo`
---
-ALTER TABLE `agenda_tipo`
-  MODIFY `agt_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `age_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `cidade`
 --
 ALTER TABLE `cidade`
-  MODIFY `cid_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `cid_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `funcionario`
@@ -364,7 +359,45 @@ ALTER TABLE `usuario_permissao`
 -- AUTO_INCREMENT de tabela `veiculo`
 --
 ALTER TABLE `veiculo`
-  MODIFY `vei_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `vei_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `viagem`
+--
+ALTER TABLE `viagem`
+  MODIFY `via_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `agenda`
+--
+ALTER TABLE `agenda`
+  ADD CONSTRAINT `fk_agenda_cidade` FOREIGN KEY (`cid_cod`) REFERENCES `cidade` (`cid_cod`),
+  ADD CONSTRAINT `fk_agenda_usuario` FOREIGN KEY (`usu_cod`) REFERENCES `usuario` (`usu_cod`),
+  ADD CONSTRAINT `fk_agenda_veiculo` FOREIGN KEY (`vei_cod`) REFERENCES `veiculo` (`vei_cod`);
+
+--
+-- Limitadores para a tabela `funcionario`
+--
+ALTER TABLE `funcionario`
+  ADD CONSTRAINT `fk_funcionario_setor` FOREIGN KEY (`set_cod`) REFERENCES `setor` (`set_cod`),
+  ADD CONSTRAINT `fk_funcionario_usuario` FOREIGN KEY (`usu_cod`) REFERENCES `usuario` (`usu_cod`);
+
+--
+-- Limitadores para a tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `fk_usuario_perm` FOREIGN KEY (`upe_cod`) REFERENCES `usuario_permissao` (`upe_cod`),
+  ADD CONSTRAINT `fk_usuario_setor` FOREIGN KEY (`set_cod`) REFERENCES `setor` (`set_cod`);
+
+--
+-- Limitadores para a tabela `viagem`
+--
+ALTER TABLE `viagem`
+  ADD CONSTRAINT `fk_agenda_viagem` FOREIGN KEY (`age_cod`) REFERENCES `agenda` (`age_cod`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
