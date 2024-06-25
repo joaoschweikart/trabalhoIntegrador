@@ -45,18 +45,22 @@
                         <input name="vei_nome" type="text" class="form-control blockenter" id="vei_nome" style="text-transform:uppercase;" required />
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <label class="control-label" for="vei_placa">Placa:</label>
                         <input name="vei_placa" type="text" class="form-control blockenter" id="vei_placa" style="text-transform:uppercase;" required />
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <label class="control-label" for="vei_cor">Cor: </label>
                         <small>(Essa será a cor que ficará visível na agenda)</small>
                         <input name="vei_cor" type="color" class="form-control blockenter" id="vei_cor" style="text-transform:uppercase;" required />
                     </div>
+                    <div class="col-sm-4">
+                        <label class="control-label" for="vei_cor">Foto do veículo:</label>
+                        <small>(Disponível na dashboard)</small>
+                        <input id="vei_img_url" name="vei_img_url" type="file" class="file"  data-show-upload="false">
+                    </div>           
                 </div>
-
             </form>
 
         </div>
