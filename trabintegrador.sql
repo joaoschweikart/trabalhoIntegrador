@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 25-Jun-2024 às 20:22
--- Versão do servidor: 10.1.38-MariaDB
--- versão do PHP: 5.6.40
+-- Tempo de geração: 26-Jun-2024 às 02:19
+-- Versão do servidor: 10.4.27-MariaDB
+-- versão do PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `trabintegrador`
+-- Banco de dados: `trabintegrador`
 --
 
 -- --------------------------------------------------------
@@ -30,14 +29,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `agenda` (
   `age_cod` int(11) NOT NULL,
-  `usu_cod` int(11) DEFAULT NULL,
-  `age_titulo` text,
-  `age_descricao` text,
-  `vei_cod` int(11) DEFAULT NULL,
-  `age_hora_ini` varchar(100) DEFAULT NULL,
-  `age_hora_fim` varchar(100) DEFAULT NULL,
-  `cid_cod` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `usu_cod` int(11) NOT NULL,
+  `age_titulo` varchar(100) NOT NULL,
+  `age_descricao` varchar(500) DEFAULT NULL,
+  `vei_cod` int(11) NOT NULL,
+  `age_hora_ini` varchar(100) NOT NULL,
+  `age_hora_fim` varchar(100) NOT NULL,
+  `cid_cod` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `agenda`
@@ -58,8 +57,8 @@ CREATE TABLE `cidade` (
   `cid_cod` int(11) NOT NULL,
   `cid_nome` varchar(100) NOT NULL,
   `est_uf` varchar(2) NOT NULL,
-  `cid_situacao` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `cid_situacao` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `cidade`
@@ -95,20 +94,20 @@ INSERT INTO `cidade` (`cid_cod`, `cid_nome`, `est_uf`, `cid_situacao`) VALUES
 
 CREATE TABLE `funcionario` (
   `fun_cod` int(11) NOT NULL,
-  `fun_nome` varchar(100) DEFAULT NULL,
-  `fun_cargo` varchar(30) DEFAULT NULL,
+  `fun_nome` varchar(100) NOT NULL,
+  `fun_cargo` varchar(30) NOT NULL,
   `set_cod` int(11) NOT NULL,
   `fun_tel` int(11) DEFAULT NULL,
   `fun_mail` varchar(100) DEFAULT NULL,
   `usu_cod` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `funcionario`
 --
 
 INSERT INTO `funcionario` (`fun_cod`, `fun_nome`, `fun_cargo`, `set_cod`, `fun_tel`, `fun_mail`, `usu_cod`) VALUES
-(1, 'funcionario', NULL, 1, NULL, 'funcionario@gmail.com', 7);
+(1, 'funcionario', '', 1, NULL, 'funcionario@gmail.com', 7);
 
 -- --------------------------------------------------------
 
@@ -118,10 +117,10 @@ INSERT INTO `funcionario` (`fun_cod`, `fun_nome`, `fun_cargo`, `set_cod`, `fun_t
 
 CREATE TABLE `setor` (
   `set_cod` int(11) NOT NULL,
-  `set_nome` text,
-  `set_descricao` text,
+  `set_nome` varchar(20) NOT NULL,
+  `set_descricao` varchar(100) NOT NULL,
   `set_situacao` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `setor`
@@ -133,34 +132,6 @@ INSERT INTO `setor` (`set_cod`, `set_nome`, `set_descricao`, `set_situacao`) VAL
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `solicitacao`
---
-
-CREATE TABLE `solicitacao` (
-  `sol_cod` int(11) NOT NULL,
-  `set_cod` int(11) NOT NULL,
-  `cli_cod` int(11) NOT NULL,
-  `sol_data` date DEFAULT NULL,
-  `sol_status` int(11) NOT NULL DEFAULT '0' COMMENT '0-pendente, 1-andamento, 2-concluido, 3-cancelado',
-  `sol_descricao` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `to_do_list`
---
-
-CREATE TABLE `to_do_list` (
-  `td_cod` int(11) NOT NULL,
-  `td_texto` text,
-  `td_stts` text,
-  `td_data` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `usuario`
 --
 
@@ -168,12 +139,12 @@ CREATE TABLE `usuario` (
   `usu_cod` int(11) NOT NULL,
   `usu_nome` varchar(100) NOT NULL,
   `usu_login` varchar(50) NOT NULL,
-  `usu_senha` varchar(2000) NOT NULL,
-  `usu_email` varchar(200) DEFAULT NULL,
+  `usu_senha` varchar(200) NOT NULL,
+  `usu_email` varchar(50) DEFAULT NULL,
   `upe_cod` int(11) NOT NULL COMMENT 'usuario_permissao',
-  `usu_situacao` int(11) NOT NULL DEFAULT '1',
+  `usu_situacao` int(11) NOT NULL DEFAULT 1,
   `set_cod` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `usuario`
@@ -192,8 +163,8 @@ INSERT INTO `usuario` (`usu_cod`, `usu_nome`, `usu_login`, `usu_senha`, `usu_ema
 CREATE TABLE `usuario_permissao` (
   `upe_cod` int(11) NOT NULL,
   `upe_descricao` varchar(30) NOT NULL,
-  `upe_situacao` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `upe_situacao` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `usuario_permissao`
@@ -213,10 +184,10 @@ CREATE TABLE `veiculo` (
   `vei_cod` int(11) NOT NULL,
   `vei_nome` varchar(40) NOT NULL,
   `vei_placa` varchar(7) NOT NULL,
-  `vei_situacao` int(11) NOT NULL DEFAULT '1',
+  `vei_situacao` int(11) NOT NULL DEFAULT 1,
   `vei_cor` varchar(10) NOT NULL,
-  `vei_img_url` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `vei_img_url` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `veiculo`
@@ -237,28 +208,28 @@ INSERT INTO `veiculo` (`vei_cod`, `vei_nome`, `vei_placa`, `vei_situacao`, `vei_
 CREATE TABLE `viagem` (
   `via_cod` int(11) NOT NULL,
   `age_cod` int(11) NOT NULL,
-  `via_km_inicial` int(11) DEFAULT NULL,
-  `via_km_final` int(11) DEFAULT NULL,
+  `via_km_inicial` int(11) NOT NULL,
+  `via_km_final` int(11) NOT NULL,
   `via_gastos` varchar(500) DEFAULT NULL,
   `via_observacoes` varchar(500) DEFAULT NULL,
-  `via_preenchido` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `via_preenchido` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `viagem`
 --
 
 INSERT INTO `viagem` (`via_cod`, `age_cod`, `via_km_inicial`, `via_km_final`, `via_gastos`, `via_observacoes`, `via_preenchido`) VALUES
-(6, 14, NULL, NULL, NULL, NULL, 0),
-(7, 15, NULL, NULL, NULL, NULL, 0),
-(8, 16, NULL, NULL, NULL, NULL, 0);
+(6, 14, 0, 0, NULL, NULL, 0),
+(7, 15, 0, 0, NULL, NULL, 0),
+(8, 16, 0, 0, NULL, NULL, 0);
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `agenda`
+-- Índices para tabela `agenda`
 --
 ALTER TABLE `agenda`
   ADD PRIMARY KEY (`age_cod`),
@@ -267,13 +238,13 @@ ALTER TABLE `agenda`
   ADD KEY `fk_agenda_cidade` (`cid_cod`);
 
 --
--- Indexes for table `cidade`
+-- Índices para tabela `cidade`
 --
 ALTER TABLE `cidade`
   ADD PRIMARY KEY (`cid_cod`);
 
 --
--- Indexes for table `funcionario`
+-- Índices para tabela `funcionario`
 --
 ALTER TABLE `funcionario`
   ADD PRIMARY KEY (`fun_cod`),
@@ -281,25 +252,13 @@ ALTER TABLE `funcionario`
   ADD KEY `fk_funcionario_usuario` (`usu_cod`);
 
 --
--- Indexes for table `setor`
+-- Índices para tabela `setor`
 --
 ALTER TABLE `setor`
   ADD PRIMARY KEY (`set_cod`);
 
 --
--- Indexes for table `solicitacao`
---
-ALTER TABLE `solicitacao`
-  ADD PRIMARY KEY (`sol_cod`);
-
---
--- Indexes for table `to_do_list`
---
-ALTER TABLE `to_do_list`
-  ADD PRIMARY KEY (`td_cod`);
-
---
--- Indexes for table `usuario`
+-- Índices para tabela `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`usu_cod`),
@@ -307,90 +266,78 @@ ALTER TABLE `usuario`
   ADD KEY `fk_usuario_setor` (`set_cod`);
 
 --
--- Indexes for table `usuario_permissao`
+-- Índices para tabela `usuario_permissao`
 --
 ALTER TABLE `usuario_permissao`
   ADD PRIMARY KEY (`upe_cod`);
 
 --
--- Indexes for table `veiculo`
+-- Índices para tabela `veiculo`
 --
 ALTER TABLE `veiculo`
   ADD PRIMARY KEY (`vei_cod`);
 
 --
--- Indexes for table `viagem`
+-- Índices para tabela `viagem`
 --
 ALTER TABLE `viagem`
   ADD PRIMARY KEY (`via_cod`),
   ADD KEY `fk_agenda_viagem` (`age_cod`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `agenda`
+-- AUTO_INCREMENT de tabela `agenda`
 --
 ALTER TABLE `agenda`
   MODIFY `age_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `cidade`
+-- AUTO_INCREMENT de tabela `cidade`
 --
 ALTER TABLE `cidade`
   MODIFY `cid_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `funcionario`
+-- AUTO_INCREMENT de tabela `funcionario`
 --
 ALTER TABLE `funcionario`
   MODIFY `fun_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `setor`
+-- AUTO_INCREMENT de tabela `setor`
 --
 ALTER TABLE `setor`
   MODIFY `set_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `solicitacao`
---
-ALTER TABLE `solicitacao`
-  MODIFY `sol_cod` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `to_do_list`
---
-ALTER TABLE `to_do_list`
-  MODIFY `td_cod` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `usuario`
+-- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `usu_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `usuario_permissao`
+-- AUTO_INCREMENT de tabela `usuario_permissao`
 --
 ALTER TABLE `usuario_permissao`
   MODIFY `upe_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `veiculo`
+-- AUTO_INCREMENT de tabela `veiculo`
 --
 ALTER TABLE `veiculo`
   MODIFY `vei_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `viagem`
+-- AUTO_INCREMENT de tabela `viagem`
 --
 ALTER TABLE `viagem`
   MODIFY `via_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Constraints for dumped tables
+-- Restrições para despejos de tabelas
 --
 
 --
