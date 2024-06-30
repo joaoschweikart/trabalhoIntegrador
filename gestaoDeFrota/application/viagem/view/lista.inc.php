@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_SESSION) || $_SESSION['gestaoVeiculos_userPermissao'] != 1){
+    if(!isset($_SESSION)){
         echo'<script>window.location="?module=index&acao=logout"</script>';
     }
 
@@ -8,7 +8,8 @@
             JOIN veiculo vei ON age.vei_cod = vei.vei_cod
             JOIN cidade cid ON age.cid_cod = cid.cid_cod
             JOIN usuario usu ON age.usu_cod = usu.usu_cod
-            WHERE vi.via_preenchido = 1";
+            WHERE vi.via_preenchido = 1 AND
+            age.usu_cod = ".$_SESSION['gestaoVeiculos_userId'];
     $s_preenc = $data->find('dynamic', $sql);
 
     $sql = "SELECT vi.via_cod, age.age_cod, age.age_hora_ini, age.age_hora_fim, cid.cid_nome, usu.usu_nome, vei.vei_nome, vei.vei_placa FROM viagem vi
@@ -16,7 +17,8 @@
             JOIN veiculo vei ON age.vei_cod = vei.vei_cod
             JOIN cidade cid ON age.cid_cod = cid.cid_cod
             JOIN usuario usu ON age.usu_cod = usu.usu_cod
-            WHERE vi.via_preenchido = 0";
+            WHERE vi.via_preenchido = 0 AND
+            age.usu_cod = ".$_SESSION['gestaoVeiculos_userId'];
     $n_preenc = $data->find('dynamic', $sql);
     
 ?>
@@ -76,10 +78,14 @@
                                     <tbody>
                                         <?php
                                         for ($i = 0; $i < count($n_preenc); $i++) {
+                                            $startDateTime = new DateTime($n_preenc[$i]['age_hora_ini']);
+                                            $endDateTime = new DateTime($n_preenc[$i]['age_hora_fim']);
+                                            $formattedStart = $startDateTime->format('d/m/Y \à\s H:i');
+                                            $formattedEnd = $endDateTime->format('d/m/Y \à\s H:i');    
                                             echo '
                                                 <tr>
                                                     <td>' . $n_preenc[$i]['age_cod'] . '</td>
-                                                    <td>' . $n_preenc[$i]['age_hora_ini'] . ' até ' . $n_preenc[$i]['age_hora_fim'] . ' </td>
+                                                    <td>' . $formattedStart . ' até ' . $formattedEnd . ' </td>
                                                     <td>' . $n_preenc[$i]['cid_nome'] . '</td>
                                                     <td>' . $n_preenc[$i]['usu_nome'] . '</td>
                                                     <td>' . $n_preenc[$i]['vei_nome'] . ' - ' . $n_preenc[$i]['vei_placa'] . '</td>
@@ -118,10 +124,14 @@
                                     <tbody>
                                         <?php
                                             for ($i = 0; $i < count($s_preenc); $i++) {
+                                                $startDateTime = new DateTime($s_preenc[$i]['age_hora_ini']);
+                                                $endDateTime = new DateTime($s_preenc[$i]['age_hora_fim']);
+                                                $formattedStart = $startDateTime->format('d/m/Y \à\s H:i');
+                                                $formattedEnd = $endDateTime->format('d/m/Y \à\s H:i');                                               
                                                 echo '
                                                     <tr>
                                                         <td>' . $s_preenc[$i]['age_cod'] . '</td>
-                                                        <td>' . $s_preenc[$i]['age_hora_ini'] . ' até ' . $s_preenc[$i]['age_hora_fim'] . ' </td>
+                                                        <td>' . $formattedStart . ' até ' . $formattedEnd . ' </td>
                                                         <td>' . $s_preenc[$i]['cid_nome'] . '</td>
                                                         <td>' . $s_preenc[$i]['usu_nome'] . '</td>
                                                         <td>' . $s_preenc[$i]['vei_nome'] . ' - ' . $s_preenc[$i]['vei_placa'] . '</td>
