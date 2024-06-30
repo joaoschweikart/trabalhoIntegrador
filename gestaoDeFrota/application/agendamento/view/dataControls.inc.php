@@ -50,6 +50,9 @@
 		
 		case 'excluir_agendamento':
 
+			$sql='DELETE FROM viagem WHERE age_cod = '.$_POST['param_0'];
+			$data->executaSQL($sql);
+
 			$sql='DELETE FROM agenda WHERE age_cod = '.$_POST['param_0'];
 			$data->executaSQL($sql);
 			

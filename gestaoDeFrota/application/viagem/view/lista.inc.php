@@ -55,9 +55,9 @@
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#tab-1">
-                        <i class="fa fa-thumbs-o-up"></i>Não-preenchidas (<?php echo count($n_preenc); ?>)</a></li>
+                        <i class="fa fa-thumbs-o-down"></i>Não-preenchidas (<?php echo count($n_preenc); ?>)</a></li>
                     <li class=""><a data-toggle="tab" href="#tab-2">
-                        <i class="fa fa-thumbs-o-down"></i>Preenchidas (<?php echo count($s_preenc); ?>)</a></li>
+                        <i class="fa fa-thumbs-o-up"></i>Preenchidas (<?php echo count($s_preenc); ?>)</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane active">

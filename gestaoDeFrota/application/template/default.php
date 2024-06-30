@@ -109,6 +109,9 @@
 	    <script src="library/inspinia/js/plugins/flot/jquery.flot.symbol.js"></script>
 	    <script src="library/inspinia/js/plugins/flot/jquery.flot.time.js"></script>
 
+		<!-- chartJS -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 	    <!-- Peity -->
 	    <script src="library/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
 	    <script src="library/inspinia/js/demo/peity-demo.js"></script>
@@ -123,9 +126,6 @@
 		<!-- Jvectormap -->
 	    <script src="library/inspinia/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
 	    <script src="library/inspinia/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-
-	    <!-- EayPIE -->
-	    <script src="library/inspinia/js/plugins/easypiechart/jquery.easypiechart.js"></script>
 
 	    <!-- Sparkline -->
 	    <script src="library/inspinia/js/plugins/sparkline/jquery.sparkline.min.js"></script>
@@ -221,8 +221,6 @@
 
 	    <!-- Sparkline demo data  -->
 	    <script src="library/inspinia/js/demo/sparkline-demo.js"></script>
-	    <!-- ChartJS-->
-		<script src="library/inspinia/js/plugins/chartJs/Chart.min.js"></script>
 		<!-- blueimp gallery -->
     	<script src="library/inspinia/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
 
