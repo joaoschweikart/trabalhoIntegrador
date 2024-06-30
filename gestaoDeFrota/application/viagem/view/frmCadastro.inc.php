@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_SESSION) || $_SESSION['gestaoVeiculos_userPermissao'] != 1){
+    if(!isset($_SESSION)){
         echo'<script>window.location="?module=index&acao=logout"</script>';
     }
 
@@ -10,6 +10,9 @@
             JOIN usuario usu ON age.usu_cod = usu.usu_cod
             WHERE vi.via_cod = ".$_POST['param_0'];
     $result = $data->find('dynamic', $sql);
+
+    $startDateTime = new DateTime($result[0]['age_hora_ini']);
+    $formattedStart = $startDateTime->format('d/m/Y \à\s H:i'); 
 ?>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-9 col-xs-8">
@@ -63,7 +66,7 @@
 
                     <div class="col-sm-2">
                         <label class="control-label">Data de início:</label>
-                        <input type="text" class="form-control" disabled readonly value="<?php echo $result[0]['age_hora_ini'] ?>"/>
+                        <input type="text" class="form-control" disabled readonly value="<?php echo $formattedStart ?>"/>
                     </div>
 
                     <div class="col-sm-2">
@@ -73,12 +76,12 @@
 
                     <div class="col-sm-2">
                         <label class="control-label" for="via_km_inicial">KM Inicial do carro:</label>
-                        <input name="via_km_inicial" type="text" class="form-control" id="via_km_inicial" required />
+                        <input name="via_km_inicial" type="number" class="form-control" id="via_km_inicial" required />
                     </div>
 
                     <div class="col-sm-2">
                         <label class="control-label" for="via_km_final">KM Final do carro:</label>
-                        <input name="via_km_final" type="text" class="form-control" id="via_km_final" required />
+                        <input name="via_km_final" type="number" class="form-control" id="via_km_final" required />
                     </div>
 
                 </div>
