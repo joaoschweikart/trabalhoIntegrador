@@ -51,25 +51,50 @@
 </script>
 
 <div class="row wrapper border-bottom white-bg page-heading" onunload="reload()">
-    <div class="col-lg-6 col-xs-6">
+    <div class="col-lg-6">
         <h2>Agendamentos</h2>
     </div>
-    <div class="col-lg-6 col-xs-6" style="text-align:right;">
-        <br /><br />
-		<a href="?module=agendamento&acao=novo" class="btn btn-primary" style="height: 34px;">
-            <span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm">Novo</span>
-	</a>
+    <div class="col-lg-6" style="text-align:right;">
+        <br />
+		<a href="?module=agendamento&acao=novo" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus-sign"></span> Novo
+		</a>
     </div>
 </div>
 <a data-toggle='modal' data-target='#visualiza_agenda' id="abre-popup"></a>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <div class="col-lg-12">
+		<div class="col-lg-2">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>Veículos por cor</h5>
+				</div>
+				<div class="ibox-content">
+					<div>
+						<?php
+						$sql = "SELECT * FROM veiculo";
+						$veiculos = $data->find('dynamic', $sql);
+						foreach($veiculos as $veiculo){
+							echo '<div class="row" style="margin-bottom: 5px;">
+								<div class="col-lg-2">
+									<div style="background-color:'.$veiculo['vei_cor'].'; width: 20px; height: 20px; border-radius: 50%;"></div>
+								</div>
+								<div class="col-lg-10">
+									'.$veiculo['vei_nome'].'
+								</div>
+							</div>';
+						}
+						?>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="col-lg-10">
             <div id="calendar"></div>
         </div>
     </div>
-    <br />
+    <br /><br />
 
 	<div class="modal inmodal" id="visualiza_agenda" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
