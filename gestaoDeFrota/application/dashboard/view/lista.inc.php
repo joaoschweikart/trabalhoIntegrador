@@ -12,7 +12,8 @@
 
     $sql = "SELECT
                 v.vei_cod,
-                COUNT(a.age_cod) as qtd_agendamentos
+                COUNT(a.age_cod) as qtd_agendamentos,
+                v.vei_cor
             FROM veiculo v
                 LEFT JOIN agenda a ON v.vei_cod = a.vei_cod
                 GROUP BY v.vei_cod
@@ -26,6 +27,7 @@
     for($i = 0; $i < 4; $i++){
         $vei_cod = $veiculos[$i]['vei_cod'];
         $vei_nome = $veiculos[$i]['vei_nome'];
+        $vei_cor = $veiculos[$i]['vei_cor'];
         $qtd_agendamentos = 0;
 
         foreach ($agendamentoPorVeiculo as $agendamento) {
@@ -38,7 +40,8 @@
         $percentagem = number_format($percentagem, 2, '.', '');
         $dataPoints[] = [
             'label' => $vei_nome,
-            'value' => $percentagem
+            'value' => $percentagem,
+            'color' => $vei_cor
         ];
     }
     $dataJSON = json_encode($dataPoints);
@@ -161,7 +164,7 @@
                     data: dynamicData.map(function(item) {
                         return item.value;
                     }),
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#014A14'],
+                    backgroundColor: [dynamicData[0].color, dynamicData[1].color, dynamicData[2].color, dynamicData[3].color]
                 }]
             },
             options: {
