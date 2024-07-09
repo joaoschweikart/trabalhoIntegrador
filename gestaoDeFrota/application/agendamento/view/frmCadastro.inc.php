@@ -22,7 +22,7 @@
     <?php
         switch ($_GET[ms]) {
             case 1:
-                echo 'toastr.info("O veículo selecionado não estará disponível para a data selecionada", "Veículo indisponível!");';
+                echo 'toastr.info("O veículo selecionado não estará disponível para a data e hora selecionada", "Veículo indisponível!");';
                 break;
         }
     ?>

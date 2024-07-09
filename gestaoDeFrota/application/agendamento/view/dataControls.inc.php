@@ -6,6 +6,22 @@
 			$periodo_ini = $_POST['data_ini'] . ' ' . $_POST['age_hora_ini'].':00';
 			$periodo_fin = $_POST['data_fim'] . ' ' . $_POST['age_hora_fim'].':00';
 
+			$sql = "SELECT *
+					FROM agenda
+					WHERE vei_cod = ".$_POST['vei_cod']." AND
+							(
+								('".$periodo_ini."' BETWEEN age_hora_ini AND age_hora_fim)
+								OR ('".$periodo_ini."' BETWEEN age_hora_ini AND age_hora_fim)
+								OR (age_hora_ini BETWEEN '".$periodo_ini."' AND '".$periodo_ini."')
+								OR (age_hora_fim BETWEEN '".$periodo_ini."' AND '".$periodo_ini."')
+							)";
+			$conflito = $data->find('dynamic',$sql);
+			
+			if(count($conflito) > 0){ // conflito na data
+				echo '<script>window.location = "?module=agendamento&acao=novo&ms=1";</script>';
+				break;
+			}
+
 			$data_ini = $_POST['data_ini'];
 			$age_hora_ini = $_POST['age_hora_ini'];
 			$aux['age_hora_ini'] = date('Y-m-d H:i:s', strtotime("$data_ini $age_hora_ini"));
