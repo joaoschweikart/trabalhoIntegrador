@@ -143,9 +143,8 @@
                     </ul>';
                     break;
                 case '2':
-                case '3':
                     echo '
-                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Registros</span> <span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Cadastros</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">    
                         <li '.$item_sel[0].' ><a href="?module=cadastro&acao=lista_usuario">Usuários</a></li>
                     </ul>';

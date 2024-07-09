@@ -86,7 +86,7 @@
         <img src="application/images/logo-system.png">
         <form role="form" action="?module=index&action=valida_senha" method="POST">
             <input type="hidden" name="gestaoVeiculos_idSession" value="<?php echo $randon;?>" />
-            <input type="text" name="usuario" placeholder="E-mail" required>
+            <input type="text" name="usuario" placeholder="Usuário" required>
             <input type="password" name="senha" placeholder="Senha" required>
             <button type="submit">Enviar</button>
             <?php if($_GET['erro']){ ?>
